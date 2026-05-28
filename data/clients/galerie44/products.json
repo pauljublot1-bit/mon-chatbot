@@ -1,0 +1,74 @@
+[
+  {
+    "id": "chaise-eames-daw",
+    "name": "Chaise DAW — Charles & Ray Eames",
+    "description": "Chaise à pieds en bois d'érable massif, assise en polypropylène blanc ivoire. Éditée par Herman Miller, circa 1950. État d'origine excellent, légères traces d'usage.",
+    "price": 680,
+    "category": "Chaises & Fauteuils",
+    "link": "https://www.galerie44.com/produits/chaise-eames-daw",
+    "inStock": true
+  },
+  {
+    "id": "lampe-arco-castiglioni",
+    "name": "Lampe Arco — Achille Castiglioni",
+    "description": "Lampe de sol emblématique en acier inoxydable brossé et base en marbre de Carrare. Design 1962, éditée par Flos. Électrification entièrement révisée.",
+    "price": 1250,
+    "category": "Luminaires",
+    "link": "https://www.galerie44.com/produits/lampe-arco-castiglioni",
+    "inStock": true
+  },
+  {
+    "id": "fauteuil-egg-jacobsen",
+    "name": "Fauteuil Egg — Arne Jacobsen",
+    "description": "Fauteuil Egg original en tissu laine gris anthracite. Conçu pour l'hôtel SAS de Copenhague en 1958. Structure en fibre de verre d'époque, restaurée par nos artisans.",
+    "price": 2400,
+    "category": "Chaises & Fauteuils",
+    "link": "https://www.galerie44.com/produits/fauteuil-egg-jacobsen",
+    "inStock": false
+  },
+  {
+    "id": "table-tulipe-saarinen",
+    "name": "Table Tulipe — Eero Saarinen",
+    "description": "Table ronde en marbre blanc de Carrare sur pied aluminium laqué blanc. Diamètre 120 cm. Design 1956 pour Knoll. Authentifiée et en parfait état.",
+    "price": 3200,
+    "category": "Tables",
+    "link": "https://www.galerie44.com/produits/table-tulipe-saarinen",
+    "inStock": true
+  },
+  {
+    "id": "bibliotheque-prouve",
+    "name": "Bibliothèque Compas — Jean Prouvé",
+    "description": "Bibliothèque en chêne massif avec piètement compas en métal peint gris. Circa 1950, produite aux Ateliers Jean Prouvé. Rare et en très bon état général.",
+    "price": 4800,
+    "category": "Rangements",
+    "link": "https://www.galerie44.com/produits/bibliotheque-prouve",
+    "inStock": true
+  },
+  {
+    "id": "canape-ds-sofa",
+    "name": "Canapé DS-600 — De Sede",
+    "description": "Canapé modulable en cuir pleine fleur havane naturel, 3 modules. Design suisse des années 1970. Cuir d'origine traité et nourri, structure révisée.",
+    "price": 5600,
+    "category": "Canapés & Sofas",
+    "link": "https://www.galerie44.com/produits/canape-de-sede-ds600",
+    "inStock": false
+  },
+  {
+    "id": "lampadaire-serge-mouille",
+    "name": "Lampadaire Trois Bras — Serge Mouille",
+    "description": "Lampadaire à trois bras articulés en acier laqué noir mat. Édition originale des années 1950. Câblage entièrement refait aux normes. Pièce rare et recherchée.",
+    "price": 6200,
+    "category": "Luminaires",
+    "link": "https://www.galerie44.com/produits/lampadaire-serge-mouille",
+    "inStock": true
+  },
+  {
+    "id": "bureau-perriand",
+    "name": "Bureau Ateliers — Charlotte Perriand",
+    "description": "Bureau en chêne massif huilé avec caissons coulissants en métal gris. Circa 1955. Restauré avec soin en préservant les matériaux et finitions d'origine.",
+    "price": 3800,
+    "category": "Bureaux",
+    "link": "https://www.galerie44.com/produits/bureau-perriand",
+    "inStock": true
+  }
+]

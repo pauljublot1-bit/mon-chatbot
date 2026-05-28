@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* ══════════════════════════════════════════════════════════════
+   Variables CSS globales
+   Les couleurs --color-primary et --color-primary-light sont
+   injectées dynamiquement depuis layout.tsx via company.ts,
+   ce qui permet de personnaliser le branding sans toucher au CSS.
+   ══════════════════════════════════════════════════════════════ */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Couleur principale : remplacée au runtime par layout.tsx */
+  --color-primary: #1d4ed8;
+  --color-primary-light: #eff6ff;
+}
+
+/* ── Thème sombre (optionnel, désactivé par défaut) ─────────── */
+/* Pour l'activer : décommentez ce bloc */
+/*
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0f172a;
+    --foreground: #f1f5f9;
+  }
+}
+*/
+
+/* ── Enregistrement des tokens Tailwind ─────────────────────── */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+}
+
+/* ── Base ───────────────────────────────────────────────────── */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Scrollbar personnalisée (zone des messages) ───────────── */
+.chat-messages-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: #e2e8f0 transparent;
+}
+
+.chat-messages-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-messages-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-messages-scroll::-webkit-scrollbar-thumb {
+  background-color: #e2e8f0;
+  border-radius: 9999px;
+}
+
+.chat-messages-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #cbd5e1;
+}
+
+/* ── Animation des points "en train d'écrire..." ───────────── */
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30%            { transform: translateY(-4px); opacity: 1; }
+}
+
+.typing-dot {
+  animation: typing-dot 1.2s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
