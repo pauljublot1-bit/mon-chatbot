@@ -5,6 +5,8 @@ import OpenAI from 'openai';
 import { faq } from '@/app/data/faq';
 import company from '@/app/config/company';
 import { buildSystemPrompt } from '@/lib/system-prompt';
+import { isEnabled, getPlan } from '@/lib/features';
+import { isLimitReached, isNearLimit, incrementCounter } from '@/lib/usage';
 import { prisma } from '@/lib/prisma';
 import type {
   ChatRequestBody,
@@ -102,24 +104,45 @@ export async function POST(req: NextRequest): Promise<NextResponse<ChatApiRespon
   // SessionId : fourni par le client ou généré ici
   const sessionId = body.sessionId ?? crypto.randomUUID();
   const clientId  = body.clientId  ?? 'galerie44';
+  const plan      = getPlan(clientId);
 
-  // ── 1. FAQ en priorité ──────────────────────────────────────────
+  // ── 0. Vérification limite mensuelle (fail open) ────────────────
+  const limitReached = await isLimitReached(clientId, plan).catch(() => false);
+  if (limitReached) {
+    return NextResponse.json({
+      reply: 'Je suis temporairement indisponible. Contactez-nous pour continuer à bénéficier du service.',
+      matched: false,
+    });
+  }
+
+  // ── 1. Feature flags ────────────────────────────────────────────
+  // Réservations désactivées → réponse immédiate si la question y fait référence
+  const RESERVATION_KEYWORDS = ['réservation', 'reservation', 'réserver', 'reserver', 'rendez-vous', 'rdv', 'calendly', 'booking', 'appointment'];
+  if (!isEnabled(clientId, 'reservations') && RESERVATION_KEYWORDS.some((k) => userMessage.toLowerCase().includes(k))) {
+    const msg = `Je ne gère pas encore les réservations en ligne. Contactez-nous directement au ${company.phone} pour fixer un rendez-vous.`;
+    saveToDatabase(sessionId, clientId, userMessage, msg).catch(() => null);
+    return NextResponse.json({ reply: msg, matched: false });
+  }
+
+  // ── 2. FAQ en priorité ──────────────────────────────────────────
   const faqResult = findAnswerInFaq(userMessage.toLowerCase());
   if (faqResult) {
-    // Sauvegarde async, sans bloquer la réponse
     saveToDatabase(sessionId, clientId, userMessage, faqResult.answer).catch(() => null);
+    incrementCounter(clientId).catch(() => null);
     return NextResponse.json({ reply: faqResult.answer, matched: true });
   }
 
-  // ── 2. Fallback si pas de clé OpenAI ───────────────────────────
+  // ── 3. Fallback si pas de clé OpenAI ───────────────────────────
   if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY.startsWith('sk-...')) {
     const fallback = `Je n'ai pas trouvé de réponse précise. Appelez-nous au ${company.phone}.`;
     saveToDatabase(sessionId, clientId, userMessage, fallback).catch(() => null);
     return NextResponse.json({ reply: fallback, matched: false });
   }
 
-  // ── 3. GPT-4o-mini ──────────────────────────────────────────────
-  const { products, config } = loadClientData(clientId);
+  // ── 4. GPT-4o-mini ──────────────────────────────────────────────
+  const { products: allProducts, config } = loadClientData(clientId);
+  // Catalogue désactivé → on n'injecte pas les produits dans le prompt
+  const products = isEnabled(clientId, 'catalogue') ? allProducts : [];
   const systemPrompt = buildSystemPrompt(products, config);
   const history = (body.history ?? []).slice(-20);
 
@@ -139,9 +162,14 @@ export async function POST(req: NextRequest): Promise<NextResponse<ChatApiRespon
       completion.choices[0]?.message?.content?.trim() ??
       `Je n'ai pas de réponse. Appelez-nous au ${company.phone}.`;
 
-    // Sauvegarde async
+    // Sauvegarde + comptage async
     saveToDatabase(sessionId, clientId, userMessage, reply).catch(() => null);
-    return NextResponse.json({ reply, matched: false });
+    incrementCounter(clientId).catch(() => null);
+
+    const nearLimit = await isNearLimit(clientId, plan).catch(() => false);
+    const res = NextResponse.json({ reply, matched: false });
+    if (nearLimit) res.headers.set('X-Usage-Warning', 'true');
+    return res;
 
   } catch (error: unknown) {
     // Gestion des erreurs OpenAI

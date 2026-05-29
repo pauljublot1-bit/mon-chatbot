@@ -48,8 +48,14 @@ export function buildSystemPrompt(products: Product[], config: ClientConfig): st
     .map((f) => `• ${f.keywords[0]} : ${f.answer}`)
     .join('\n');
 
-  // ── Langue de réponse ───────────────────────────────────────────
-  const langue = config.language === 'fr' ? 'français' : config.language;
+  // ── Règle de langue ─────────────────────────────────────────────
+  const multilingual = config.features?.multilingual === true;
+  const defaultLang  = config.defaultLanguage ?? config.language ?? 'fr';
+  const langLabel    = defaultLang === 'fr' ? 'français' : defaultLang;
+
+  const langRule = multilingual
+    ? `1. RÈGLE IMPORTANTE : Détecte automatiquement la langue utilisée par le visiteur dans son message et réponds TOUJOURS dans cette même langue. Si le visiteur écrit en anglais, réponds en anglais. Si en espagnol, réponds en espagnol. Ne mentionne jamais ce changement de langue, fais-le naturellement.`
+    : `1. Réponds UNIQUEMENT en ${langLabel}.`;
 
   return `Tu es ${config.botName}, l'assistant virtuel de ${config.storeName}.
 
@@ -81,7 +87,7 @@ ${faqSection}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 RÈGLES STRICTES
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-1. Réponds UNIQUEMENT en ${langue}.
+${langRule}
 2. Réponds uniquement aux sujets liés à la boutique et ses produits.
 3. N'invente JAMAIS un prix — utilise exclusivement ceux du catalogue ci-dessus.
 4. Si tu n'es pas certain d'une information, invite le client à appeler le ${company.phone}.

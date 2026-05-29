@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
 import './globals.css';
 import company from '@/app/config/company';
+import DemoBannerWrapper from '@/components/DemoBannerWrapper';
 
 /* ── Police Google Fonts ────────────────────────────────────── */
 const geistSans = Geist({
@@ -45,6 +46,7 @@ export default function RootLayout({
       } as React.CSSProperties}
     >
       <body className="min-h-full bg-gray-50">
+        <DemoBannerWrapper />
         {children}
       </body>
     </html>

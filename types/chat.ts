@@ -61,13 +61,31 @@ export interface Product {
 // Configuration client
 // ─────────────────────────────────────────────
 
+import type { Plan, Features } from './features';
+
 /** Config spécifique à chaque client (data/clients/[id]/config.json) */
 export interface ClientConfig {
-  storeName: string;
-  botName: string;
-  primaryColor: string;
-  welcomeMessage: string;
-  language: string;
+  storeName:         string;
+  botName:           string;
+  primaryColor:      string;
+  /** Peut être une simple chaîne ou un objet { fr: "...", en: "...", ... } */
+  welcomeMessage:    string | Record<string, string>;
+  language:          string;
+  defaultLanguage?:  string;
+  supportedLanguages?: string[];
+  /** Plan souscrit — détermine les features par défaut */
+  plan?:             Plan;
+  /** Overrides explicites par rapport aux valeurs du plan */
+  features?:         Partial<Features>;
+}
+
+/** Résout welcomeMessage en string selon la langue demandée */
+export function resolveWelcomeMessage(
+  msg: string | Record<string, string>,
+  lang = 'fr',
+): string {
+  if (typeof msg === 'string') return msg;
+  return msg[lang] ?? msg[Object.keys(msg)[0]] ?? '';
 }
 
 // ─────────────────────────────────────────────

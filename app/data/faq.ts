@@ -11,7 +11,7 @@ export const faq: FaqItem[] = [
   },
   {
     id: 'livraison',
-    keywords: ['livraison', 'livrer', 'expédition', 'envoyer', 'transport', 'france', 'délai', 'réception'],
+    keywords: ['livraison', 'livrer', 'expédition', 'frais de port', 'recevoir', 'délai', 'réception', 'transport'],
     answer:
       'La livraison est gratuite partout en France métropolitaine. ' +
       'Nous livrons également dans le monde entier — contactez-nous pour un devis international. ' +
@@ -70,6 +70,13 @@ export const faq: FaqItem[] = [
       'Vous pouvez nous joindre par téléphone au +33 (0)7 49 90 92 65, ' +
       'ou via le formulaire de contact sur notre site galerie44.com. ' +
       'Nous répondons dans les meilleurs délais.',
+  },
+  {
+    id: 'horaires',
+    keywords: ['horaires', 'ouvert', 'ouvre', 'ferme', 'fermé', 'heures', 'quand', 'disponible'],
+    answer:
+      'Nous sommes ouverts du mardi au samedi de 10h à 19h, et le dimanche de 14h à 18h. ' +
+      'Fermé le lundi. Pour toute visite, nous vous recommandons de prendre rendez-vous au +33 (0)7 49 90 92 65.',
   },
   {
     id: 'retours',

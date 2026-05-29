@@ -5,7 +5,9 @@ import ChatBubble from './ChatBubble';
 import ChatHeader from './ChatHeader';
 import ChatInput from './ChatInput';
 import company from '@/app/config/company';
+import clientConfig from '@/data/clients/galerie44/config.json';
 import type { Message, ChatApiResponse, ConversationMessage } from '@/types/chat';
+import { resolveWelcomeMessage } from '@/types/chat';
 
 /**
  * ChatWindow — Orchestrateur principal du chatbot.
@@ -45,7 +47,10 @@ export default function ChatWindow() {
       {
         id: 'welcome',
         role: 'bot',
-        content: company.welcomeMessage,
+        content: resolveWelcomeMessage(
+          clientConfig.welcomeMessage as string | Record<string, string>,
+          clientConfig.defaultLanguage ?? 'fr',
+        ),
         timestamp: new Date(),
       },
     ]);

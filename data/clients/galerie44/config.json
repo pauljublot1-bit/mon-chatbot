@@ -2,6 +2,22 @@
   "storeName": "Galerie 44",
   "botName": "Assistant Galerie 44",
   "primaryColor": "#1c1c1c",
-  "welcomeMessage": "Bienvenue chez Galerie 44 ! Je suis votre assistant dédié. Je peux vous renseigner sur notre collection vintage, nos livraisons, ou fixer un rendez-vous. Comment puis-je vous aider ?",
-  "language": "fr"
+  "welcomeMessage": {
+    "fr": "Bienvenue chez Galerie 44 ! Je suis votre assistant dédié. Je peux vous renseigner sur notre collection vintage, nos livraisons, ou fixer un rendez-vous. Comment puis-je vous aider ?",
+    "en": "Welcome to Galerie 44! I'm your dedicated assistant. I can tell you about our vintage collection, deliveries, or arrange an appointment. How can I help you?",
+    "es": "¡Bienvenido a Galerie 44! Soy su asistente. Puedo informarle sobre nuestra colección vintage, entregas o concertar una cita. ¿En qué puedo ayudarle?",
+    "de": "Willkommen bei Galerie 44! Ich bin Ihr Assistent. Ich kann Ihnen über unsere Vintage-Kollektion, Lieferungen oder Terminvereinbarungen informieren. Wie kann ich Ihnen helfen?",
+    "it": "Benvenuto da Galerie 44! Sono il vostro assistente. Posso informarvi sulla nostra collezione vintage, le consegne o fissare un appuntamento. Come posso aiutarvi?"
+  },
+  "language": "fr",
+  "defaultLanguage": "fr",
+  "supportedLanguages": ["fr", "en", "es", "de", "it"],
+  "plan": "basic",
+  "features": {
+    "catalogue": true,
+    "reservations": false,
+    "dashboard": true,
+    "export_csv": false,
+    "multilingual": true
+  }
 }
